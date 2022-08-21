@@ -6,3 +6,4 @@ This REstful application uses different technologies scuh as:
 -> Hibernate: used to access data layer
 -> Swagger: for API documentation
 -> MockMvc: for testing
+
