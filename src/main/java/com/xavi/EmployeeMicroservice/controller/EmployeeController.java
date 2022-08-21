@@ -8,10 +8,7 @@ import com.xavi.EmployeeMicroservice.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -27,6 +24,7 @@ public class EmployeeController {
     private EmployeeService employeeService;
 
     //list all employees in the system
+    @GetMapping("/allEmployees")
     public List<EmployeeDto> employeeDtoList(){
          return employeeService.getAllEmployees();
 
@@ -35,24 +33,28 @@ public class EmployeeController {
     }
 
     //add an employee
+    @PostMapping("/addEmployee")
     public ResponseEntity<Employee> saveEmployee(
             @Validated @RequestBody EmployeeDto employeeDto) throws UserAlreadyExistsException {
        return employeeService.addEmployee(employeeDto);
     }
 
     //find an employee
+    @GetMapping("/findAnEmployee/{id}")
     public ResponseEntity<EmployeeDto> findEmployeeByNationalId(
             @PathVariable(value = "id") Long nationalId) throws UserNotFoundException {
         return employeeService.findAnEmployee(nationalId);
     }
 
     //update an employee
+    @PutMapping("/updateEmployeeDetails/{id}")
     public ResponseEntity<EmployeeDto> updateAnEmployee(@PathVariable(value = "id") Long nationalId,
                                                         @RequestBody EmployeeDto employeeDto) throws UserNotFoundException {
         return employeeService.updateEmployee(employeeDto, nationalId);
     }
 
     //delete an employee
+    @DeleteMapping("/deleteAnEmployee/{id}")
     public Map<String, Boolean> deleteEmployee(@PathVariable(value = "id") Long nationalId) throws UserNotFoundException {
         return  employeeService.deleteEmployee(nationalId);
     }
