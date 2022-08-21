@@ -52,6 +52,7 @@ public class EmployeeController {
 
     //update an employee
     @PutMapping("/updateEmployeeDetails/{id}")
+    @ApiOperation("Update an Employee details")
     public ResponseEntity<EmployeeDto> updateAnEmployee(@PathVariable(value = "id") Long nationalId,
                                                         @RequestBody EmployeeDto employeeDto) throws UserNotFoundException {
         return employeeService.updateEmployee(employeeDto, nationalId);
@@ -59,6 +60,7 @@ public class EmployeeController {
 
     //delete an employee
     @DeleteMapping("/deleteAnEmployee/{id}")
+    @ApiOperation("Delete an employee")
     public Map<String, Boolean> deleteEmployee(@PathVariable(value = "id") Long nationalId) throws UserNotFoundException {
         return  employeeService.deleteEmployee(nationalId);
     }
