@@ -7,12 +7,18 @@ import com.xavi.EmployeeMicroservice.model.Employee;
 import com.xavi.EmployeeMicroservice.services.EmployeeService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.RepresentationModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 /**
  * Author: oduorfrancis134@gmail.com;
@@ -26,25 +32,30 @@ public class EmployeeController {
 
     //list all employees in the system
     @GetMapping("/allEmployees")
-    @ApiOperation("View all Employees")
-    public List<EmployeeDto> employeeDtoList(){
-         return employeeService.getAllEmployees();
+    @ApiOperation("An API endpoint to view all Employees")
+    public CollectionModel<EmployeeDto> employeeDtoList(){
+//        return employeeService.getAllEmployees();
+        /** Introducing spring HATEOAS (Hypermedia As The Engine Of Application State) for
+         * hypertextmedia driven apis
+         **/
+         List<EmployeeDto> employees = employeeService.getAllEmployees();
+         Link selfLink = linkTo(methodOn(EmployeeController.class)
+                 .employeeDtoList()).withSelfRel();
 
-            /** Introducing spring HATEOAS (Hypermedia As The Engine Of Application State) to present information
-             * about the rest api to the client **/
+        return CollectionModel.of(employees, selfLink);
     }
 
     //add an employee
     @PostMapping("/addEmployee")
-    @ApiOperation("Add an Employee")
+    @ApiOperation(" An end point to add an Employee")
     public ResponseEntity<Employee> saveEmployee(
             @Validated @RequestBody EmployeeDto employeeDto) throws UserAlreadyExistsException {
-       return employeeService.addEmployee(employeeDto);
+        return employeeService.addEmployee(employeeDto);
     }
 
     //find an employee
     @GetMapping("/findAnEmployee/{id}")
-    @ApiOperation("Find an employee using their national id")
+    @ApiOperation("An API endpoint to find an employee using their national id")
     public ResponseEntity<EmployeeDto> findEmployeeByNationalId(
             @PathVariable(value = "id") Long nationalId) throws UserNotFoundException {
         return employeeService.findAnEmployee(nationalId);
@@ -52,7 +63,7 @@ public class EmployeeController {
 
     //update an employee
     @PutMapping("/updateEmployeeDetails/{id}")
-    @ApiOperation("Update an Employee details")
+    @ApiOperation("An endpoint to update an Employee details")
     public ResponseEntity<EmployeeDto> updateAnEmployee(@PathVariable(value = "id") Long nationalId,
                                                         @RequestBody EmployeeDto employeeDto) throws UserNotFoundException {
         return employeeService.updateEmployee(employeeDto, nationalId);

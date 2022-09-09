@@ -32,7 +32,7 @@ public class EmployeeService {
         EmployeeDto employeeDto = new EmployeeDto();
 
         employeeDto.setNationalId(employee.getNationalId());
-        employeeDto.setUsername(employeeDto.getUsername());
+        employeeDto.setUsername(employee.getUsername());
         employeeDto.setEmail(employee.getEmail());
         employeeDto.setRole(employee.getRole());
 

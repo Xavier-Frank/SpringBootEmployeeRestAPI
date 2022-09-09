@@ -1,4 +1,4 @@
-package com.xavi.EmployeeMicroservice.swagger;
+package com.xavi.EmployeeMicroservice.configfile;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -43,12 +43,12 @@ public class SwaggerConfiguration implements WebMvcConfigurer {
                 .build();
     }
 
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry){
-        registry.addResourceHandler("swagger-ui.html")
-                .addResourceLocations("classpath:/META-INF/resources/");
-
-        registry.addResourceHandler("/webjars/**")
-                .addResourceLocations("classpath:/META-INF/resources/webjars");
-    }
+//    @Override
+//    public void addResourceHandlers(ResourceHandlerRegistry registry){
+//        registry.addResourceHandler("swagger-ui.html")
+//                .addResourceLocations("classpath:/META-INF/resources/");
+//
+//        registry.addResourceHandler("/webjars/**")
+//                .addResourceLocations("classpath:/META-INF/resources/webjars");
+//    }
 }
