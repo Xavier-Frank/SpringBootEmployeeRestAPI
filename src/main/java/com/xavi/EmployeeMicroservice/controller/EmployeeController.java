@@ -34,7 +34,6 @@ public class EmployeeController {
     @GetMapping("/allEmployees")
     @ApiOperation("An API endpoint to view all Employees")
     public CollectionModel<EmployeeDto> employeeDtoList(){
-//        return employeeService.getAllEmployees();
         /** Introducing spring HATEOAS (Hypermedia As The Engine Of Application State) for
          * hypertextmedia driven apis
          **/
