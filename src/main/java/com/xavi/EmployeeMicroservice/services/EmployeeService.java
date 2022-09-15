@@ -121,4 +121,7 @@ public class EmployeeService {
     }
 
 
+    public void deleteAllEmployees() {
+         employeeRepository.deleteAll();
+    }
 }
